@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Mokshitha ❤️</title>
+    <style>
+        body { display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #ffeef2; font-family: sans-serif; text-align: center; }
+        #main-gif { width: 250px; border-radius: 15px; margin-bottom: 20px; }
+        h1 { color: #d63384; }
+        .buttons { display: flex; justify-content: center; gap: 20px; margin-top: 20px; }
+        button { padding: 15px 30px; font-size: 1.2rem; border: none; border-radius: 10px; cursor: pointer; }
+        #yesButton { background-color: #ff4d6d; color: white; }
+        #noButton { background-color: #adb5bd; color: white; position: absolute; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div id="valentine-question">
+        <img id="main-gif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIybHh6N3h6Z3h6Z3h6Z3h6Z3h6Z3h6Z3h6Z3h6Z3h6Z3h6Jm09MQ/MDJ9uXYFrv06k/giphy.gif">
+        <h1>Mokshitha, will you be my Valentine? ❤️</h1>
+        <div class="buttons">
+            <button id="yesButton" onclick="celebrate()">Yes!</button>
+            <button id="noButton" onmouseover="moveButton()">No</button>
+        </div>
+    </div>
+    <div id="celebration" class="hidden">
+        <img id="main-gif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNnh6Z3h6Z3h6Z3h6Z3h6Z3h6Z3h6Z3h6Z3h6Z3h6Z3h6Jm09MQ/26BRv0ThflsHCqDrG/giphy.gif">
+        <h1>Yay! I love you Mokshitha! 🥰</h1>
+    </div>
+    <script>
+        function moveButton() {
+            const noBtn = document.getElementById('noButton');
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+        }
+        function celebrate() {
+            document.getElementById('valentine-question').classList.add('hidden');
+            document.getElementById('celebration').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
