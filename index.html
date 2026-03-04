@@ -1,45 +1,141 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Mokshitha ❤️</title>
-    <style>
-        body { display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #ffeef2; font-family: sans-serif; text-align: center; }
-        #main-gif { width: 250px; border-radius: 15px; margin-bottom: 20px; }
-        h1 { color: #d63384; }
-        .buttons { display: flex; justify-content: center; gap: 20px; margin-top: 20px; }
-        button { padding: 15px 30px; font-size: 1.2rem; border: none; border-radius: 10px; cursor: pointer; }
-        #yesButton { background-color: #ff4d6d; color: white; }
-        #noButton { background-color: #adb5bd; color: white; position: absolute; }
-        .hidden { display: none; }
-    </style>
-</head>
-<body>
-    <div id="valentine-question">
-        <img id="main-gif" src="https://media.tenor.com/VRQEHxNalGEAAAA1/tamil-actress-gif-tamil-heroin-gif.webp">
-        <h1>Mokshitha, will you be my Valentine? ❤️</h1>
-        <div class="buttons">
-            <button id="yesButton" onclick="celebrate()">Yes!</button>
-            <button id="noButton" onmouseover="moveButton()">No</button>
+import React, { useState } from 'react';
+import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, PieChart, Pie } from 'recharts';
+import { AlertTriangle, CheckCircle, Factory, Leaf, ShieldCheck, TrendingUp, TrendingDown } from 'lucide-react';
+
+// Mock Data - Representing Shein's ESG Shift
+const supplierData = [
+  { name: 'Grade A', value: 45, color: '#10b981' },
+  { name: 'Grade B', value: 33, color: '#3b82f6' },
+  { name: 'Grade C', value: 15, color: '#f59e0b' },
+  { name: 'Failed', value: 7, color: '#ef4444' },
+];
+
+const emissionTrend = [
+  { month: 'Jan', actual: 2.1, target: 2.0 },
+  { month: 'Feb', actual: 2.3, target: 1.9 },
+  { month: 'Mar', actual: 2.2, target: 1.8 },
+  { month: 'Apr', actual: 2.1, target: 1.7 },
+  { month: 'May', actual: 2.0, target: 1.6 },
+  { month: 'Jun', actual: 1.9, target: 1.5 },
+];
+
+const TransparencyDashboard = () => {
+  const [activeTab, setActiveTab] = useState('Overview');
+
+  const StatCard = ({ title, value, trend, icon: Icon, statusColor }) => (
+    <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+      <div className="flex justify-between items-start">
+        <div>
+          <p className="text-sm font-medium text-gray-500">{title}</p>
+          <h3 className="text-2xl font-bold mt-1 text-gray-900">{value}</h3>
         </div>
+        <div className={p-2 rounded-lg ${statusColor}}>
+          <Icon size={20} className="text-white" />
+        </div>
+      </div>
+      <div className="flex items-center mt-4">
+        {trend > 0 ? <TrendingUp size={16} className="text-green-500 mr-1" /> : <TrendingDown size={16} className="text-red-500 mr-1" />}
+        <span className={text-sm font-medium ${trend > 0 ? 'text-green-500' : 'text-red-500'}}>
+          {Math.abs(trend)}% vs Last Qtr
+        </span>
+      </div>
     </div>
-    <div id="celebration" class="hidden">
-        <img id="main-gif" src="https://www.bing.com/th/id/OGC.e2083985190d1be814beaf76b6841c57?o=7&pid=1.7&rm=3&rurl=https%3a%2f%2fmedia1.tenor.com%2fm%2fDbaETSEWRq8AAAAC%2flove-loveyou.gif&ehk=aaJcfCCLTIC9dObKwwWO6p5qtXvqJCvBv3qeRi2mIgo%3d">
-        <h1>Yay! I love you Mokshitha! 🥰</h1>
+  );
+
+  return (
+    <div className="min-h-screen bg-gray-50 p-8 font-sans">
+      {/* Header */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+        <div>
+          <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">SHEIN <span className="text-blue-600">TRACE</span></h1>
+          <p className="text-gray-500">Real-time ESG Compliance & Operational Transparency</p>
+        </div>
+        <div className="flex gap-3">
+          <button className="px-4 py-2 bg-black text-white rounded-lg font-medium hover:bg-gray-800 transition">Investor Report</button>
+          <button className="px-4 py-2 bg-white border border-gray-200 rounded-lg font-medium hover:bg-gray-50 transition">Public View</button>
+        </div>
+      </div>
+
+      {/* KPI Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <StatCard title="Suppliers Audited" value="78.4%" trend={12} icon={Factory} statusColor="bg-blue-500" />
+        <StatCard title="Carbon Intensity" value="26.2M mt" trend={-4} icon={Leaf} statusColor="bg-green-500" />
+        <StatCard title="Blockchain Traceability" value="15.2%" trend={45} icon={ShieldCheck} statusColor="bg-purple-500" />
+        <StatCard title="Compliance Risk" value="High" trend={-2} icon={AlertTriangle} statusColor="bg-red-500" />
+      </div>
+
+      {/* Charts Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        {/* Emission Chart */}
+        <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+          <h3 className="text-lg font-bold mb-6 text-gray-800">Carbon Emission vs. 2030 Target</h3>
+          <div className="h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={emissionTrend}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                <XAxis dataKey="month" />
+                <YAxis />
+                <Tooltip />
+                <Line type="monotone" dataKey="actual" stroke="#ef4444" strokeWidth={3} dot={{ r: 6 }} name="Actual Emissions" />
+                <Line type="dashed" dataKey="target" stroke="#10b981" strokeDasharray="5 5" name="Target Path" />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* Supplier Breakdown */}
+        <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+          <h3 className="text-lg font-bold mb-6 text-gray-800">Supplier ESG Rating Distribution</h3>
+          <div className="h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={supplierData}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip cursor={{fill: '#f3f4f6'}} />
+                <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                  {supplierData.map((entry, index) => (
+                    <Cell key={cell-${index}} fill={entry.color} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      </div>
+
+      {/* Compliance Table */}
+      <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+        <div className="p-6 border-b border-gray-50">
+          <h3 className="text-lg font-bold text-gray-800">Regulatory & Governance Incidents</h3>
+        </div>
+        <table className="w-full text-left">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-6 py-3 text-xs font-semibold text-gray-500 uppercase">Region</th>
+              <th className="px-6 py-3 text-xs font-semibold text-gray-500 uppercase">Type</th>
+              <th className="px-6 py-3 text-xs font-semibold text-gray-500 uppercase">Status</th>
+              <th className="px-6 py-3 text-xs font-semibold text-gray-500 uppercase">Impact Score</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-100">
+            <tr>
+              <td className="px-6 py-4 font-medium text-gray-900">European Union</td>
+              <td className="px-6 py-4 text-gray-600">Ecodesign Compliance Audit</td>
+              <td className="px-6 py-4"><span className="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-full">In Progress</span></td>
+              <td className="px-6 py-4 font-semibold text-red-500">Critical</td>
+            </tr>
+            <tr>
+              <td className="px-6 py-4 font-medium text-gray-900">United States</td>
+              <td className="px-6 py-4 text-gray-600">UFLPA Verification</td>
+              <td className="px-6 py-4"><span className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Verified</span></td>
+              <td className="px-6 py-4 font-semibold text-green-500">Low</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <script>
-        function moveButton() {
-            const noBtn = document.getElementById('noButton');
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-            noBtn.style.left = x + 'px';
-            noBtn.style.top = y + 'px';
-        }
-        function celebrate() {
-            document.getElementById('valentine-question').classList.add('hidden');
-            document.getElementById('celebration').classList.remove('hidden');
-        }
-    </script>
-</body>
-</html>
+  );
+};
+
+export default TransparencyDashboard;
